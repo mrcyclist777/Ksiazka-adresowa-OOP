@@ -6,6 +6,7 @@ using namespace std;
 int main()
 {
     KsiazkaAdresowa ksiazkaAdresowa;
+    //ksiazkaAdresowa.wczytajUzytkownikowZPliku();
     ksiazkaAdresowa.rejestracjaUzytkownika();
     ksiazkaAdresowa.wypiszWszystkichUzytkownikow();
 
