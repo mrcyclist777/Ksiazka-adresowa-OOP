@@ -5,33 +5,29 @@
 
 #include "UzytkownikMenedzer.h"
 #include "AdresatMenedzer.h"
+#include "MetodyPomocnicze.h"
 
 using namespace std;
 
 class KsiazkaAdresowa {
     UzytkownikMenedzer uzytkownikMenedzer;
-    AdresatMenedzer *adresatMenedzer;
-    const string NAZWA_PLIKU_Z_ADRESATAMI;
+    AdresatMenedzer adresatMenedzer;
+    MetodyPomocnicze metodyPomocnicze;
 
 public:
-    ~KsiazkaAdresowa() {
-        delete adresatMenedzer;
-        adresatMenedzer = NULL;
-    };
-    KsiazkaAdresowa(string nazwaPlikuZUzytkownikami, string nazwaPlikuZAdresatami) :
-        uzytkownikMenedzer(nazwaPlikuZUzytkownikami), NAZWA_PLIKU_Z_ADRESATAMI(nazwaPlikuZAdresatami) {
-        adresatMenedzer = NULL;
+    KsiazkaAdresowa(string nazwaPlikuZUzytkownikami, string nazwaPlikuZAdresatami) : uzytkownikMenedzer(nazwaPlikuZUzytkownikami), adresatMenedzer(nazwaPlikuZAdresatami) {
+        uzytkownikMenedzer.wczytajUzytkownikowZPliku();
     };
     void rejestracjaUzytkownika();
     void wypiszWszystkichUzytkownikow();
     void logowanieUzytkownika();
     void dodajAdresata();
+    void menu();
     void zmianaHaslaZalogowanegoUzytkownika();
     void wylogowanieUzytkownika();
     void wyswietlWszystkichAdresatow();
     bool czyUzytkownikJestZalogowany();
     int pobierzZPlikuIdOstatniegoAdresata();
-    int pobierzIdZalogowanegoUzytkownika();
 
 };
 

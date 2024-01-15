@@ -16,9 +16,7 @@ class PlikZAdresatami {
 
     MetodyPomocnicze metodyPomocnicze;
 
-    const string NAZWA_PLIKU_Z_ADRESATAMI;
-    int idOstatniegoAdresata;
-    int idZalogowanegoUzytkownika;
+    const string nazwaPlikuZAdresatami;
     string zamienDaneAdresataNaLinieZDanymiOddzielonymiPionowymiKreskami(Adresat adresat);
     Adresat pobierzDaneAdresata(string daneAdresataOddzielonePionowymiKreskami);
     int pobierzIdAdresataZDanychOddzielonychPionowymiKreskami(string daneJednegoAdresataOddzielonePionowymiKreskami);
@@ -26,10 +24,7 @@ class PlikZAdresatami {
 
 public:
     vector <Adresat> wczytajAdresatowZalogowanegoUzytkownikaZPliku(int idZalogowanegoUzytkownika);
-    PlikZAdresatami(string nazwaPlikuZAdresatami): NAZWA_PLIKU_Z_ADRESATAMI(nazwaPlikuZAdresatami)
-    {
-        idOstatniegoAdresata = 0;
-    };
+    PlikZAdresatami(string nazwaPlikuZAdresatami): nazwaPlikuZAdresatami(nazwaPlikuZAdresatami) {};
     void dopiszAdresataDoPliku(Adresat adresat);
     int pobierzZPlikuIdOstatniegoAdresata();
 };

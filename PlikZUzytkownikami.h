@@ -15,12 +15,12 @@ class PlikZUzytkownikami {
 
     MetodyPomocnicze metodyPomocnicze;
 
-    const string NAZWA_PLIKU_Z_UZYTKOWNIKAMI;
+    const string nazwaPlikuZUzytkownikami;
     string zamienDaneUzytkownikaNaLinieZDanymiOddzielonaPionowymiKreskami(Uzytkownik uzytkownik);
     Uzytkownik pobierzDaneUzytkownika(string daneJednegoUzytkownikaOddzielonePionowymiKreskami);
 
 public:
-    PlikZUzytkownikami(string nazwaPlikuZUzytkownikami) : NAZWA_PLIKU_Z_UZYTKOWNIKAMI(nazwaPlikuZUzytkownikami) {};
+    PlikZUzytkownikami(string plikZUzytkownikami) : nazwaPlikuZUzytkownikami(plikZUzytkownikami) {};
     void dopiszUzytkownikaDoPliku(Uzytkownik uzytkownik);
     void zapiszWszystkichUzytkownikowDoPliku(vector <Uzytkownik> &uzytkownicy);
     vector <Uzytkownik> wczytajUzytkownikowZPliku();

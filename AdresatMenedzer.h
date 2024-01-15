@@ -3,9 +3,7 @@
 
 #include <iostream>
 #include <vector>
-#include <windows.h>
 #include <fstream>
-#include <cstdlib>
 
 #include "Adresat.h"
 #include "PlikZAdresatami.h"
@@ -17,22 +15,24 @@ class AdresatMenedzer {
 
     MetodyPomocnicze metodyPomocnicze;
 
-    const int ID_ZALOGOWANEGO_UZYTKOWNIKA;
+    int idZalogowanegoUzytkownika;
+    int idOstatniegoAdresata;
     vector <Adresat> adresaci;
     PlikZAdresatami plikZAdresatami;
-
     Adresat podajDaneNowegoAdresata();
     void wyswietlDaneAdresata(Adresat adresat);
 
 
 public:
-    AdresatMenedzer(string nazwaPlikuZAdresatami, int idZalogowanegoUzytkownika) : plikZAdresatami(nazwaPlikuZAdresatami), ID_ZALOGOWANEGO_UZYTKOWNIKA(idZalogowanegoUzytkownika){
-        adresaci = plikZAdresatami.wczytajAdresatowZalogowanegoUzytkownikaZPliku(ID_ZALOGOWANEGO_UZYTKOWNIKA);
-    };
-
+    AdresatMenedzer(string nazwaPlikuZAdresatami) : plikZAdresatami(nazwaPlikuZAdresatami) {};
+    void ustawIdZalogowanegoUzytkownika(int id);
+    int pobierzIdZalogowanegoUzytkownika();
+    void ustawIdOstatniegoAdresata(int id);
+    int pobierzIdOstatniegoAdresata();
     void wyswietlWszystkichAdresatow();
     void dodajAdresata();
-    void pobierzZPlikuIdOstatniegoAdresata();
+    void wczytajAdresatowZalogowanegoUzytkownikaZPliku();
+    void wylogowywanieUzytkownika();
 };
 
 #endif
