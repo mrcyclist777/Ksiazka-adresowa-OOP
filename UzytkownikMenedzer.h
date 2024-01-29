@@ -9,11 +9,8 @@
 
 #include "Uzytkownik.h"
 #include "PlikZUzytkownikami.h"
-#include "MetodyPomocnicze.h"
 
 class UzytkownikMenedzer {
-
-    MetodyPomocnicze metodyPomocnicze;
 
     int idZalogowanegoUzytkownika;
     vector <Uzytkownik> uzytkownicy;
@@ -24,12 +21,14 @@ class UzytkownikMenedzer {
     PlikZUzytkownikami plikZUzytkownikami;
 
 public:
-    UzytkownikMenedzer(string nazwaPlikuZUzytkownikami) : plikZUzytkownikami(nazwaPlikuZUzytkownikami), idZalogowanegoUzytkownika(0) {};
+    UzytkownikMenedzer(string nazwaPlikuZUzytkownikami) : plikZUzytkownikami(nazwaPlikuZUzytkownikami) {
+        idZalogowanegoUzytkownika = 0;
+        uzytkownicy = plikZUzytkownikami.wczytajUzytkownikowZPliku();
+    };
     void rejestracjaUzytkownika();
     void ustawIdZalogowanegoUzytkownika(int id);
     void logowanieUzytkownika();
     void wypiszWszystkichUzytkownikow();
-    void wczytajUzytkownikowZPliku();
     void zmianaHaslaZalogowanegoUzytkownika();
     void wylogowanieUzytkownika();
     bool czyUzytkownikJestZalogowany();

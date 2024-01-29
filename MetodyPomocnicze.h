@@ -17,8 +17,6 @@ public:
     static string wczytajLinie();
     static int wczytajLiczbeCalkowita();
     static string pobierzLiczbe(string tekst, int pozycjaZnaku);
-    string nazwaPlikuTekstowego;
-    bool czyPlikJestPusty(string);
     static string zamienPierwszaLitereNaDuzaAPozostaleNaMale(string tekst);
     static char wczytajZnak();
     char static wybierzOpcjeZMenuGlownego();

@@ -7,16 +7,13 @@
 #include <cstdlib>
 
 #include "Adresat.h"
-#include "MetodyPomocnicze.h"
 #include "PlikZUzytkownikami.h"
 
 using namespace std;
 
 class PlikZAdresatami {
 
-    MetodyPomocnicze metodyPomocnicze;
-
-    const string nazwaPlikuZAdresatami;
+    const string NAZWA_PLIKU_Z_ADRESATAMI;
     string zamienDaneAdresataNaLinieZDanymiOddzielonymiPionowymiKreskami(Adresat adresat);
     Adresat pobierzDaneAdresata(string daneAdresataOddzielonePionowymiKreskami);
     int pobierzIdAdresataZDanychOddzielonychPionowymiKreskami(string daneJednegoAdresataOddzielonePionowymiKreskami);
@@ -24,9 +21,10 @@ class PlikZAdresatami {
 
 public:
     vector <Adresat> wczytajAdresatowZalogowanegoUzytkownikaZPliku(int idZalogowanegoUzytkownika);
-    PlikZAdresatami(string nazwaPlikuZAdresatami): nazwaPlikuZAdresatami(nazwaPlikuZAdresatami) {};
+    PlikZAdresatami(string nazwaPlikuZAdresatami): NAZWA_PLIKU_Z_ADRESATAMI(nazwaPlikuZAdresatami) {};
     void dopiszAdresataDoPliku(Adresat adresat);
-    int pobierzZPlikuIdOstatniegoAdresata();
+    int pobierzIdOstatniegoAdresata();
+    bool czyPlikJestPusty(string);
 };
 
 #endif

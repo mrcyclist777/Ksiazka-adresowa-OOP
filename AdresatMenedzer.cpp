@@ -1,38 +1,25 @@
 #include "AdresatMenedzer.h"
 
-void AdresatMenedzer::ustawIdZalogowanegoUzytkownika(int id) {
-    idZalogowanegoUzytkownika = id;
-}
-int AdresatMenedzer::pobierzIdZalogowanegoUzytkownika() {
-    return idZalogowanegoUzytkownika;
-}
-void AdresatMenedzer::ustawIdOstatniegoAdresata(int id) {
-    idOstatniegoAdresata = id;
-}
-int AdresatMenedzer::pobierzIdOstatniegoAdresata() {
-    return idOstatniegoAdresata;
-}
-
 Adresat AdresatMenedzer::podajDaneNowegoAdresata() {
     Adresat adresat;
 
-    adresat.ustawId((pobierzIdOstatniegoAdresata() + 1));
-    adresat.ustawIdUzytkownika(pobierzIdZalogowanegoUzytkownika());
+    adresat.ustawId((plikZAdresatami.pobierzIdOstatniegoAdresata() + 1));
+    adresat.ustawIdUzytkownika(ID_ZALOGOWANEGO_UZYTKOWNIKA);
 
     cout << "Podaj imie: ";
-    adresat.ustawImie(metodyPomocnicze.zamienPierwszaLitereNaDuzaAPozostaleNaMale(metodyPomocnicze.wczytajLinie()));
+    adresat.ustawImie(MetodyPomocnicze::zamienPierwszaLitereNaDuzaAPozostaleNaMale(MetodyPomocnicze::wczytajLinie()));
 
     cout << "Podaj nazwisko: ";
-    adresat.ustawNazwisko(metodyPomocnicze.zamienPierwszaLitereNaDuzaAPozostaleNaMale(metodyPomocnicze.wczytajLinie()));
+    adresat.ustawNazwisko(MetodyPomocnicze::zamienPierwszaLitereNaDuzaAPozostaleNaMale(MetodyPomocnicze::wczytajLinie()));
 
     cout << "Podaj numer telefonu: ";
-    adresat.ustawNumerTelefonu(metodyPomocnicze.wczytajLinie());
+    adresat.ustawNumerTelefonu(MetodyPomocnicze::wczytajLinie());
 
     cout << "Podaj email: ";
-    adresat.ustawEmail(metodyPomocnicze.wczytajLinie());
+    adresat.ustawEmail(MetodyPomocnicze::wczytajLinie());
 
     cout << "Podaj adres: ";
-    adresat.ustawAdres(metodyPomocnicze.wczytajLinie());
+    adresat.ustawAdres(MetodyPomocnicze::wczytajLinie());
 
     return adresat;
 }
@@ -45,7 +32,7 @@ void AdresatMenedzer::dodajAdresata() {
     adresat = podajDaneNowegoAdresata();
     adresaci.push_back(adresat);
     plikZAdresatami.dopiszAdresataDoPliku(adresat);
-    ustawIdOstatniegoAdresata(pobierzIdOstatniegoAdresata()+1);
+
 }
 
 void AdresatMenedzer::wyswietlDaneAdresata(Adresat adresat) {
@@ -58,10 +45,7 @@ void AdresatMenedzer::wyswietlDaneAdresata(Adresat adresat) {
 }
 
 void AdresatMenedzer::wczytajAdresatowZalogowanegoUzytkownikaZPliku() {
-    if (idZalogowanegoUzytkownika != 0) {
-        ustawIdOstatniegoAdresata(plikZAdresatami.pobierzZPlikuIdOstatniegoAdresata());
-        adresaci = plikZAdresatami.wczytajAdresatowZalogowanegoUzytkownikaZPliku(idZalogowanegoUzytkownika);
-    }
+    adresaci = plikZAdresatami.wczytajAdresatowZalogowanegoUzytkownikaZPliku(ID_ZALOGOWANEGO_UZYTKOWNIKA);
 }
 
 
@@ -78,10 +62,5 @@ void AdresatMenedzer::wyswietlWszystkichAdresatow() {
         cout << endl << "Ksiazka adresowa jest pusta." << endl << endl;
     }
     system("pause");
-}
-
-void AdresatMenedzer::wylogowywanieUzytkownika() {
-    adresaci.clear();
-    ustawIdZalogowanegoUzytkownika(0);
 }
 

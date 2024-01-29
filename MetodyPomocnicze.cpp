@@ -71,19 +71,6 @@ string MetodyPomocnicze::pobierzLiczbe(string tekst, int pozycjaZnaku) {
     return liczba;
 }
 
-bool MetodyPomocnicze::czyPlikJestPusty(string nazwaPlikuTekstowego) {
-    bool pusty = true;
-    fstream plikTekstowy;
-    plikTekstowy.open(nazwaPlikuTekstowego.c_str(), ios::app);
-    if (plikTekstowy.good() == true) {
-        plikTekstowy.seekg(0, ios::end);
-        if (plikTekstowy.tellg() != 0)
-            pusty = false;
-    }
-    plikTekstowy.close();
-    return pusty;
-}
-
 char MetodyPomocnicze::wybierzOpcjeZMenuUzytkownika() {
     char wybor;
 

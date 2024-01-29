@@ -1,3 +1,5 @@
 1|1|Xd|Xd|XD|XD|XD|
 2|1|Pl|Pl|PL|PL|PL|
 3|2|Cv|Cv|CV|CV|CV|
+4|4|Fg|Fg|FG|FG|FG|
+5|4|Ok|Ok|OK|OK|OK|
