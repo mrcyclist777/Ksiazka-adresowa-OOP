@@ -8,23 +8,34 @@
 
 #include "Adresat.h"
 #include "PlikZUzytkownikami.h"
+#include "PlikTekstowy.h"
 
 using namespace std;
 
-class PlikZAdresatami {
+class PlikZAdresatami :public PlikTekstowy {
 
-    const string NAZWA_PLIKU_Z_ADRESATAMI;
-    string zamienDaneAdresataNaLinieZDanymiOddzielonymiPionowymiKreskami(Adresat adresat);
+    int idOstatniegoAdresata;
+    string NAZWA_TYMCZASOWEGO_PLIKU;
+
     Adresat pobierzDaneAdresata(string daneAdresataOddzielonePionowymiKreskami);
     int pobierzIdAdresataZDanychOddzielonychPionowymiKreskami(string daneJednegoAdresataOddzielonePionowymiKreskami);
     int pobierzIdUzytkownikaZDanychOddzielonychPionowymiKreskami(string daneJednegoAdresataOddzielonePionowymiKreskami);
+    void usunPlik(string nazwaPliku);
+    void zmienNazwePliku(string staraNazwa, string nowaNazwa);
 
 public:
     vector <Adresat> wczytajAdresatowZalogowanegoUzytkownikaZPliku(int idZalogowanegoUzytkownika);
-    PlikZAdresatami(string nazwaPlikuZAdresatami): NAZWA_PLIKU_Z_ADRESATAMI(nazwaPlikuZAdresatami) {};
+    PlikZAdresatami(string NAZWA_PLIKU): PlikTekstowy(NAZWA_PLIKU) {
+        idOstatniegoAdresata = 0;
+        NAZWA_TYMCZASOWEGO_PLIKU = "Adresaci_temp.txt";
+
+    };
+    string zamienDaneAdresataNaLinieZDanymiOddzielonymiPionowymiKreskami(Adresat adresat);
     void dopiszAdresataDoPliku(Adresat adresat);
     int pobierzIdOstatniegoAdresata();
-    bool czyPlikJestPusty(string);
+    void edytujWybranaLinieWPliku(Adresat adresat, string liniaZDanymiAdresata);
+    void usunWybranaLinieWPliku(int idUsuwanegoAdresata);
+
 };
 
 #endif

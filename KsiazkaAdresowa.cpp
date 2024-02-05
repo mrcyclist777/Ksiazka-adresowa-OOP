@@ -31,19 +31,25 @@ void KsiazkaAdresowa::menu() {
                 dodajAdresata();
                 break;
             case '2':
-                wyswietlWszystkichAdresatow();
+                wyszukajAdresatowPoImieniu();
                 break;
             case '3':
-                wypiszWszystkichUzytkownikow();
+                wyszukajAdresatowPoNazwisku();
                 break;
             case '4':
-                zmianaHaslaZalogowanegoUzytkownika();
+                wyswietlWszystkichAdresatow();
                 break;
             case '5':
-                wylogowanieUzytkownika();
+                usunAdresata();
                 break;
             case '6':
-                exit(0);
+                edytujAdresata();
+                break;
+            case '7':
+                zmianaHaslaZalogowanegoUzytkownika();
+                break;
+            case '8':
+                wylogowanieUzytkownika();
                 break;
             default:
                 cout << endl << "Nie ma takiej opcji w menu." << endl << endl;
@@ -71,7 +77,7 @@ void KsiazkaAdresowa::logowanieUzytkownika() {
 
 void KsiazkaAdresowa::dodajAdresata() {
     if(uzytkownikMenedzer.czyUzytkownikJestZalogowany() == true) {
-        adresatMenedzer->dodajAdresata();
+        adresatMenedzer -> dodajAdresata();
     } else {
         cout << "Konieczne jest zalogowanie w celu dodania adresata" << endl;
         system("pause");
@@ -96,5 +102,22 @@ void KsiazkaAdresowa::wylogowanieUzytkownika() {
     adresatMenedzer = NULL;
 }
 bool KsiazkaAdresowa::czyUzytkownikJestZalogowany() {
-    uzytkownikMenedzer.czyUzytkownikJestZalogowany();
+    return uzytkownikMenedzer.czyUzytkownikJestZalogowany();
 }
+
+void KsiazkaAdresowa::usunAdresata() {
+    adresatMenedzer -> usunAdresata();
+}
+
+void KsiazkaAdresowa::edytujAdresata() {
+    adresatMenedzer -> edytujAdresata();
+}
+void KsiazkaAdresowa::wyszukajAdresatowPoImieniu() {
+    adresatMenedzer -> wyszukajAdresatowPoImieniu();
+}
+
+void KsiazkaAdresowa::wyszukajAdresatowPoNazwisku() {
+    adresatMenedzer -> wyszukajAdresatowPoNazwisku();
+}
+
+

@@ -20,7 +20,7 @@ Adresat PlikZAdresatami::pobierzDaneAdresata(string daneAdresataOddzielonePionow
     string pojedynczaDanaAdresata = "";
     int numerPojedynczejDanejAdresata = 1;
 
-    for (int pozycjaZnaku = 0; pozycjaZnaku < daneAdresataOddzielonePionowymiKreskami.length(); pozycjaZnaku++) {
+    for (size_t pozycjaZnaku = 0; pozycjaZnaku < daneAdresataOddzielonePionowymiKreskami.length(); pozycjaZnaku++) {
         if (daneAdresataOddzielonePionowymiKreskami[pozycjaZnaku] != '|') {
             pojedynczaDanaAdresata += daneAdresataOddzielonePionowymiKreskami[pozycjaZnaku];
         } else {
@@ -69,12 +69,12 @@ int PlikZAdresatami::pobierzIdUzytkownikaZDanychOddzielonychPionowymiKreskami(st
 void PlikZAdresatami::dopiszAdresataDoPliku(Adresat adresat) {
     string liniaZDanymiAdresata = "";
     fstream plikTekstowy;
-    plikTekstowy.open(NAZWA_PLIKU_Z_ADRESATAMI.c_str(), ios::out | ios::app);
+    plikTekstowy.open(NAZWA_PLIKU.c_str(), ios::out | ios::app);
 
     if (plikTekstowy.good() == true) {
         liniaZDanymiAdresata = zamienDaneAdresataNaLinieZDanymiOddzielonymiPionowymiKreskami(adresat);
 
-        if (czyPlikJestPusty(NAZWA_PLIKU_Z_ADRESATAMI) == true) {
+        if (czyPlikJestPusty() == true) {
             plikTekstowy << liniaZDanymiAdresata;
         } else {
             plikTekstowy << endl << liniaZDanymiAdresata ;
@@ -93,7 +93,7 @@ vector <Adresat> PlikZAdresatami::wczytajAdresatowZalogowanegoUzytkownikaZPliku(
     string daneJednegoAdresataOddzielonePionowymiKreskami = "";
     string daneOstaniegoAdresataWPliku = "";
     fstream plikTekstowy;
-    plikTekstowy.open(NAZWA_PLIKU_Z_ADRESATAMI.c_str(), ios::in | ios::app);
+    plikTekstowy.open(NAZWA_PLIKU.c_str(), ios::in | ios::app);
 
     if (plikTekstowy.good() == true) {
         while (getline(plikTekstowy, daneJednegoAdresataOddzielonePionowymiKreskami)) {
@@ -115,7 +115,7 @@ int PlikZAdresatami::pobierzIdOstatniegoAdresata() {
     string daneJednegoAdresataOddzielonePionowymiKreskami = "";
     string daneOstaniegoAdresataWPliku = "";
     fstream plikTekstowy;
-    plikTekstowy.open(NAZWA_PLIKU_Z_ADRESATAMI, ios::in | ios::app);
+    plikTekstowy.open(NAZWA_PLIKU, ios::in | ios::app);
 
     if (plikTekstowy.good() == true) {
         while (getline(plikTekstowy, daneJednegoAdresataOddzielonePionowymiKreskami)) {}
@@ -130,17 +130,91 @@ int PlikZAdresatami::pobierzIdOstatniegoAdresata() {
     return idOstatniegoAdresata;
 }
 
-bool PlikZAdresatami::czyPlikJestPusty(string nazwaPlikuTekstowego) {
-    bool pusty = true;
-    fstream plikTekstowy;
-    plikTekstowy.open(nazwaPlikuTekstowego.c_str(), ios::app);
-    if (plikTekstowy.good() == true) {
-        plikTekstowy.seekg(0, ios::end);
-        if (plikTekstowy.tellg() != 0)
-            pusty = false;
+void PlikZAdresatami::edytujWybranaLinieWPliku(Adresat adresat, string liniaZDanymiAdresata) {
+
+    string wczytanaLinia = "";
+    int numerWczytanejLinii = 1;
+    int idAdresata = adresat.pobierzId();
+
+    fstream odczytywanyPlikTekstowy, tymczasowyPlikTekstowy;
+    odczytywanyPlikTekstowy.open(pobierzNazwePliku().c_str(), ios::in);
+    tymczasowyPlikTekstowy.open(NAZWA_TYMCZASOWEGO_PLIKU.c_str(), ios::out | ios::app);
+
+    if (odczytywanyPlikTekstowy.good() == true) {
+        while (getline(odczytywanyPlikTekstowy, wczytanaLinia)) {
+            if (idAdresata = pobierzIdAdresataZDanychOddzielonychPionowymiKreskami(wczytanaLinia)) {
+
+                if (numerWczytanejLinii == 1)
+                    tymczasowyPlikTekstowy << liniaZDanymiAdresata;
+
+                else if (numerWczytanejLinii > 1)
+                    tymczasowyPlikTekstowy << endl << liniaZDanymiAdresata;
+            } else {
+                if (numerWczytanejLinii == 1)
+                    tymczasowyPlikTekstowy << wczytanaLinia;
+
+                else if (numerWczytanejLinii > 1)
+                    tymczasowyPlikTekstowy << endl << wczytanaLinia;
+            }
+            numerWczytanejLinii++;
+        }
     }
-    plikTekstowy.close();
-    return pusty;
+    odczytywanyPlikTekstowy.close();
+    tymczasowyPlikTekstowy.close();
+
+    usunPlik(pobierzNazwePliku().c_str());
+    zmienNazwePliku(NAZWA_TYMCZASOWEGO_PLIKU, pobierzNazwePliku());
 }
+
+void PlikZAdresatami::usunWybranaLinieWPliku(int idUsuwanegoAdresata) {
+
+    string wczytanaLinia = "";
+    string liniaZDanymiAdresata = "";
+    int numerWczytanejLinii = 1;
+
+    fstream odczytywanyPlikTekstowy, tymczasowyPlikTekstowy;
+    odczytywanyPlikTekstowy.open(NAZWA_PLIKU.c_str(), ios::in);
+    tymczasowyPlikTekstowy.open(NAZWA_TYMCZASOWEGO_PLIKU.c_str(), ios::out | ios::app);
+
+    if (odczytywanyPlikTekstowy.good() && idUsuwanegoAdresata != 0) {
+        while (getline(odczytywanyPlikTekstowy, wczytanaLinia)) {
+
+            if (idUsuwanegoAdresata == pobierzIdAdresataZDanychOddzielonychPionowymiKreskami(wczytanaLinia)) {}
+
+            else if (idUsuwanegoAdresata != numerWczytanejLinii && numerWczytanejLinii == 1)
+                tymczasowyPlikTekstowy << wczytanaLinia;
+
+            else if (idUsuwanegoAdresata != 1 && numerWczytanejLinii > 1)
+                tymczasowyPlikTekstowy << endl << wczytanaLinia;
+
+            else if (idUsuwanegoAdresata == 1 && numerWczytanejLinii > 2)
+                tymczasowyPlikTekstowy << endl << wczytanaLinia;
+
+            else if (idUsuwanegoAdresata == 1 && numerWczytanejLinii == 2)
+                tymczasowyPlikTekstowy << wczytanaLinia;
+
+        }
+        numerWczytanejLinii++;
+    }
+    odczytywanyPlikTekstowy.close();
+    tymczasowyPlikTekstowy.close();
+
+    usunPlik(NAZWA_PLIKU);
+    zmienNazwePliku(NAZWA_TYMCZASOWEGO_PLIKU, pobierzNazwePliku());
+}
+
+void PlikZAdresatami::usunPlik (string nazwaPliku) {
+    if (remove(nazwaPliku.c_str()) == 0) {}
+    else
+        cout << "Nie udalo sie usunac pliku. " << nazwaPliku << endl;
+}
+
+void PlikZAdresatami::zmienNazwePliku (string staraNazwa, string nowaNazwa) {
+    if (rename(staraNazwa.c_str(), nowaNazwa.c_str()) == 0) {}
+    else
+        cout << "Nazwa pliku nie zostala zmieniona. " << staraNazwa << endl;
+}
+
+
 
 
